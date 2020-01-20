@@ -14,7 +14,7 @@ public abstract class Polygon extends Geometry {
 	// ***************** Constructors ********************** //
 	/**
 	 * Regular constructor
-	 * 
+	 * @param color
 	 * @param points
 	 */
 	public Polygon(Color emmission,Point3D... points) {
@@ -54,7 +54,9 @@ public abstract class Polygon extends Geometry {
 	public Plane getPlane() {
 		return plane;
 	}
-
+	/**
+	 * get ray and return list of the intersections between the ray and the polygon
+	**/
 	public List<GeoPoint> findIntersections(Ray ray) {
 		List<GeoPoint> intersectionsList = this.plane.findIntersections(ray);
 		if (intersectionsList == null)

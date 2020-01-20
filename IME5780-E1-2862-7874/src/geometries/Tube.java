@@ -46,7 +46,9 @@ public class Tube extends RadialGeometry {
 			o = p0.add(v.scale(t));
 		return point.subtract(o).normal();
 	}
-
+/**
+ * ма ооеощ
+ */
 	@Override
 	public List<GeoPoint> findIntersections(Ray ray) {
 		return null;

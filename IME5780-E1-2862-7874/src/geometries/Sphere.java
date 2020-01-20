@@ -17,7 +17,7 @@ public class Sphere extends RadialGeometry {
 	// ***************** Constructors ********************** //
 	/**
 	 * Regular constructor
-	 * 
+	 * @param color
 	 * @param radius
 	 * @param center
 	 */
@@ -27,7 +27,7 @@ public class Sphere extends RadialGeometry {
 	}
 
 	/**
-	 * get center function
+	 *@return center
 	 */
 	public Point3D getCenter() {
 		return center;
@@ -37,7 +37,7 @@ public class Sphere extends RadialGeometry {
 	 * get normal function
 	 * 
 	 * @param vector
-	 * @return null
+	 * @return normal to the sphere
 	 */
 	public Vector getNormal(Point3D point) {
 		return point.subtract(this.center).normal();

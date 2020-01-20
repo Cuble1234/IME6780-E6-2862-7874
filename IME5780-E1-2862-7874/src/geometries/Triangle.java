@@ -29,7 +29,9 @@ public class Triangle extends Polygon {
 		// thus calling plane's regular getter of normal
 		return this.plane.getNormal();
 	}
-
+/**
+ *get ray and return list of the intersections between the ray and the triangle
+ */
 	@Override
 	public List<GeoPoint> findIntersections(Ray ray) {
 		List<GeoPoint> list = this.plane.findIntersections(ray);

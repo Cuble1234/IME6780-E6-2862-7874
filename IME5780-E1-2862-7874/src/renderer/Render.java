@@ -11,12 +11,18 @@ import static geometries.Intersectable.GeoPoint;
 public class Render {
 	Scene scene;
 	private ImageWriter imageWriter;
-
+/** 
+ * constructor
+ * @param imageWriter
+ * @param scene
+ */
 	public Render(ImageWriter imageWriter, Scene scene) {
 		this.scene = scene;
 		this.imageWriter = imageWriter;
 	}
-
+/**
+ * create the image
+ */
 	public void renderImage() {
 
 		for (int i = 0; i < imageWriter.getNy(); ++i)
@@ -32,13 +38,20 @@ public class Render {
 				}
 			}
 	}
-
+/**
+ * calculate the color of the point
+ * @param p
+ * @return color
+ */
 	private Color calcColor(GeoPoint p) {
 		Color color = this.scene.getAmbientLight().getIntensity();
 		color = color.add(p.geometry.getEmmission());
 		return color;
 	}
-
+/** the closest point to the camera
+ * @param intersectionPoints
+ * @returnthe closest point to the camera
+ */
 	private GeoPoint getClosestPoint(List<GeoPoint> intersectionPoints) {
 		GeoPoint closestPoint = intersectionPoints.get(0);
 		for(GeoPoint point : intersectionPoints) {
@@ -62,7 +75,10 @@ public class Render {
 	public ImageWriter getImageWriter() {
 		return imageWriter;
 	}
-
+/**
+ * print grid on the image
+ * @param interval
+ */
 	public void printGrid(int interval) {
 		java.awt.Color grid = new java.awt.Color(255, 255, 255);
 		for (int i = 0; i < imageWriter.getHeight(); i += interval)

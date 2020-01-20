@@ -10,6 +10,10 @@ public class Geometries implements Intersectable{
 	public Geometries() {
 		this.geometriesList = new ArrayList<Intersectable>();
 	}
+	/**
+	 * constructor
+	 * @param geometries
+	 */
 	public Geometries(Intersectable... geometries) {
 		for(int i = 0;i<geometries.length;++i) {
 			geometriesList.add(geometries[i]);

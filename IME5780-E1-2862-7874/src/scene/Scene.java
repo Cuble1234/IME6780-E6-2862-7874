@@ -72,6 +72,10 @@ public class Scene {
 	public String getName() {
 		return name;
 	}
+	/**
+	 * add new geometries
+	 * @param geometries
+	 */
 	public void addGeometries(Intersectable... geometries) {
 		this.geometries.add(geometries);
 	}

@@ -7,7 +7,13 @@ public class Camera {
 	private Vector vUp;
 	private Vector vTo;
 	private Vector vRight;
-
+/**
+ * regular constructor 
+ * get
+ * @param p0
+ * @param vUp
+ * @param vTo
+ */
 	public Camera(Point3D p0, Vector vUp, Vector vTo) {
 		this.p0 = p0;
 		this.vUp = vUp.normal();
@@ -43,7 +49,7 @@ public class Camera {
 		return vRight;
 	}
 	/**
-	 * get a pixel  and return a ray
+	 * get a pixel  and return a ray towards the pixel 
 	 * @param nX
 	 * @param nY
 	 * @param j
@@ -51,7 +57,7 @@ public class Camera {
 	 * @param screenDistance
 	 * @param screenWidth
 	 * @param screenHight
-	 * @return
+	 * @return ray
 	 */
 	public Ray constructRayThroughPixel(int nX, int nY, int j, int i, double screenDistance, double screenWidth,
 			double screenHight) {

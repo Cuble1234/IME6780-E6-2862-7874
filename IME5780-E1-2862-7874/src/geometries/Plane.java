@@ -53,7 +53,9 @@ public class Plane extends Geometry {
 	public Vector getNormal(Point3D point) {
 		return normal;
 	}
-
+/**
+ * get ray and return list of the intersections between the ray and the plane
+ */
 	@Override
 	public List<GeoPoint> findIntersections(Ray ray) {
 		if (ray.getDirection().dotProduct(normal) == 0) {
