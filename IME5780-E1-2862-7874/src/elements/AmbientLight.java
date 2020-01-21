@@ -2,9 +2,9 @@ package elements;
 
 import primitives.Color;
 
-public class AmbientLight {
+public class AmbientLight extends Light {
 	
-	private Color intensity;
+	double kA;
 	/**
 	 * constructor get
 	 * @param iA
