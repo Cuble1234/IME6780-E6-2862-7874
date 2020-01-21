@@ -49,8 +49,11 @@ public class Triangle extends Polygon {
 		double test3 =  list.get(0).point.subtract(p0).dotProduct(n3);
 		if(Util.isZero(test1)||Util.isZero(test2)||Util.isZero(test3))
 			return null;
-		if(test1>0&&test2>0&&test3>0||test1<0&&test2<0&&test3<0)
+		if(test1>0&&test2>0&&test3>0||test1<0&&test2<0&&test3<0) {
+			list.get(0).geometry = this;
 			return list;
+		}
+			
 		else
 			return null;
 	}

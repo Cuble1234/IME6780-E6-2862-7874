@@ -5,6 +5,7 @@ package unittests;
 
 import static org.junit.Assert.*;
 
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,6 +16,8 @@ import primitives.Color;
 import primitives.Point3D;
 import primitives.Ray;
 import primitives.Vector;
+import static geometries.Intersectable.GeoPoint;
+
 
 /**
  * @author elhan
@@ -36,8 +39,8 @@ public class PolygonTest {
 
 		};
 		Ray ray = new Ray(new Point3D(0, 0, 0), new Vector(1, 0, 0));
-		List<Point3D> list = new ArrayList<Point3D>();
-		list.add(new Point3D(1, 0, 0));
+		List<GeoPoint> list = new ArrayList<GeoPoint>();
+		list.add(new GeoPoint(polygon,new Point3D(1, 0, 0)));
 		assertEquals("Don't find intersection correct", list, polygon.findIntersections(ray));
 	}
 

@@ -87,6 +87,7 @@ public abstract class Polygon extends Geometry {
 				return null;
 			++index;
 		}
+		intersectionsList.get(0).geometry = this;
 		return intersectionsList;
 	}
 }

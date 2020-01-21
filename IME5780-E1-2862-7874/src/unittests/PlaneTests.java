@@ -16,6 +16,7 @@ import primitives.Color;
 import primitives.Point3D;
 import primitives.Ray;
 import primitives.Vector;
+import static geometries.Intersectable.GeoPoint;
 
 /**
  * @author elhan
@@ -38,8 +39,8 @@ public class PlaneTests {
 public void testFindIntersections() {
 		Plane plane = new Plane(new Color(0,0,0),new Point3D(0,0,0),new Point3D(1,0,0),new Point3D(0,1,0));
 		Ray ray = new Ray(new Point3D(0,1,1),new Vector(0,0,-1));
-		List<Point3D> list = new ArrayList<Point3D>();
-		list.add(new Point3D(0,1,0));
+		List<GeoPoint> list = new ArrayList<GeoPoint>();
+		list.add(new GeoPoint(plane,new Point3D(0,1,0)));
 		assertEquals("Didn't find intersection like exepted", list ,plane.findIntersections(ray));
 		ray = new Ray(new Point3D(0,0,1),new Vector(0,1,1));
 		assertEquals("Didn't find intersection like exepted", null ,plane.findIntersections(ray));

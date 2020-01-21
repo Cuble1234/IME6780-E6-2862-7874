@@ -11,6 +11,8 @@ import java.util.List;
 import org.junit.Test;
 import primitives.*;
 import geometries.*;
+import static geometries.Intersectable.GeoPoint;
+
 
 /**
  * @author elhan
@@ -37,7 +39,7 @@ public class TriangleTests {
 		Point3D p3 = new Point3D(0,4,0);
 		Triangle triangle = new Triangle (new Color(0,0,0),p1,p2,p3);
 		Ray ray = new Ray(new Point3D(-1, -1, 0), new Vector(0, 0, 1));
-		List<Point3D> list = new ArrayList<Point3D>();
+		List<GeoPoint> list = new ArrayList<GeoPoint>();
 		assertEquals("Didn't find intersection like exepted", null, triangle.findIntersections(ray));
 		ray = new Ray(new Point3D(2, -1, 0), new Vector(0, 0, 1));
 				assertEquals("Didn't find intersection like exepted", null ,triangle.findIntersections(ray));
@@ -50,7 +52,7 @@ public class TriangleTests {
 				ray = new Ray(new Point3D(1,1,0),new Vector(0,0,1));
 				assertEquals("Didn't find intersection like exepted", null ,triangle.findIntersections(ray));
 				ray = new Ray(new Point3D(1,1,-1),new Vector(0,0,1));
-				list.add(new Point3D(1,1,0));
+				list.add(new GeoPoint(triangle,new Point3D(1,1,0)));
 				assertEquals("Didn't find intersection like exepted", list ,triangle.findIntersections(ray));
 	}
 }
