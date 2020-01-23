@@ -1,5 +1,6 @@
 package scene;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import elements.AmbientLight;
@@ -16,7 +17,7 @@ public class Scene {
 	private Geometries geometries;
 	private Camera camera;
 	private double distance;
-	private List<LightSource> lights;
+	private List<LightSource> lights = new ArrayList();
 	public Scene(String name) {
 		this.name = name;
 		this.geometries = new Geometries();
@@ -87,6 +88,12 @@ public class Scene {
 		for(int i = 0;i<lights.length;++i) {
 			this.lights.add(lights[i]);
 		}
+	}
+	/**
+	 * @return the lights
+	 */
+	public List<LightSource> getLights() {
+		return lights;
 	}
 	
 }

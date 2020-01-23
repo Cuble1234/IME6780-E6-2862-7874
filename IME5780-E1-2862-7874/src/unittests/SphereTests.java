@@ -24,15 +24,17 @@ public class SphereTests {
 	 */
 	@Test
 	public void testGetNormal() {
+		Material material = new Material(0, 0, 0);
 		Point3D center = new Point3D(0, 0, 0);
-		Sphere sphere = new Sphere(new Color(0,0,0),8, center);
+		Sphere sphere = new Sphere(material,new Color(0,0,0),8, center);
 		Point3D point = new Point3D(0, 0, 8);
 		Vector vec = new Vector(0, 0, 1);
 		assertEquals("Didn't get normal correct", vec, sphere.getNormal(point));
 	}
 	@Test
 	public void testFindIntersections() {
-		Sphere sphere = new Sphere(new Color(0,0,0),1, new Point3D(0,0,0));
+		Material material = new Material(0, 0, 0);
+		Sphere sphere = new Sphere(material,new Color(0,0,0),1, new Point3D(0,0,0));
 		Ray ray = new Ray(new Point3D(2,0,0),new Vector(0,-1,1));
 		List<GeoPoint> list = new ArrayList<GeoPoint>();
 				assertEquals("Didn't find intersection like exepted", null ,sphere.findIntersections(ray));

@@ -23,6 +23,6 @@ public class PointLight  extends Light implements LightSource{
 		return color;
 	}
 	public Vector getL(Point3D point) {
-		return this.position.subtract(point);
+		return point.subtract(this.position).normal();
 	}
 }

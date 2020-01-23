@@ -3,9 +3,11 @@ package geometries;
 import primitives.*;
 
 public abstract class Geometry implements Intersectable {
-	Color emmission;
+	protected Color emmission;
+	protected Material material;
 	public abstract Vector getNormal(Point3D point);
-	public Geometry(Color emmission) {
+	public Geometry(Material material,Color emmission) {
+		this.material = material;
 		this.emmission = emmission;
 	}
 	/**
@@ -13,6 +15,12 @@ public abstract class Geometry implements Intersectable {
 	 */
 	public Color getEmmission() {
 		return emmission;
+	}
+	/**
+	 * @return the material
+	 */
+	public Material getMaterial() {
+		return material;
 	}
 	
 }

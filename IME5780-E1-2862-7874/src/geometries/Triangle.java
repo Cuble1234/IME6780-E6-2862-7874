@@ -12,8 +12,8 @@ public class Triangle extends Polygon {
 	 * @param points
 	 * @param plane
 	 */
-	public Triangle(Color emmission,Point3D a, Point3D b, Point3D c) {
-		super(emmission,a, b, c);
+	public Triangle(Material material,Color emmission,Point3D a, Point3D b, Point3D c) {
+		super(material,emmission,a, b, c);
 	}
 
 	/**

@@ -13,6 +13,7 @@ import org.junit.Test;
 import geometries.Intersectable;
 import geometries.Plane;
 import primitives.Color;
+import primitives.Material;
 import primitives.Point3D;
 import primitives.Ray;
 import primitives.Vector;
@@ -29,15 +30,17 @@ public class PlaneTests {
 	 */
 	@Test
 	public void testGetNormalPoint3D() {
+		Material material = new Material(0, 0, 0);
 		Vector normal = new Vector(1,2,3);
 		Point3D point = new Point3D(1,1,1);
-		Plane plane = new Plane(new Color(0,0,0),point,normal);
+		Plane plane = new Plane(material,new Color(0,0,0),point,normal);
 		normal.normal();
 		assertEquals("Didn't get normal correct",normal,plane.getNormal(point));
 	}
 		@Test
 public void testFindIntersections() {
-		Plane plane = new Plane(new Color(0,0,0),new Point3D(0,0,0),new Point3D(1,0,0),new Point3D(0,1,0));
+		Material material = new Material(0, 0, 0);
+		Plane plane = new Plane(material,new Color(0,0,0),new Point3D(0,0,0),new Point3D(1,0,0),new Point3D(0,1,0));
 		Ray ray = new Ray(new Point3D(0,1,1),new Vector(0,0,-1));
 		List<GeoPoint> list = new ArrayList<GeoPoint>();
 		list.add(new GeoPoint(plane,new Point3D(0,1,0)));

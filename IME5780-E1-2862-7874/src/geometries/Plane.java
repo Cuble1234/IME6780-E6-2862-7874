@@ -17,14 +17,14 @@ public class Plane extends Geometry {
 	 * @param p
 	 * @param normal
 	 */
-	public Plane(Color emmission,Point3D p, Vector normal) {
-		super(emmission);
+	public Plane(Material material,Color emmission,Point3D p, Vector normal) {
+		super(material,emmission);
 		this.p = new Point3D(p);
 		this.normal = new Vector(normal.normalization());
 	}
 
-	public Plane(Color emmission,Point3D p1, Point3D p2, Point3D p3) {
-		super(emmission);
+	public Plane(Material material,Color emmission,Point3D p1, Point3D p2, Point3D p3) {
+		super(material,emmission);
 		this.p = new Point3D(p1);
 		this.normal = p1.subtract(p2).crossProduct(p1.subtract(p3)).normal();
 	}

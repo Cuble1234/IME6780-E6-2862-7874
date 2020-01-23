@@ -16,18 +16,9 @@ public class Cylinder extends Tube {
  * @param axisRay
  * @param height
  */
-	public Cylinder(Color emmission,double radius, Ray axisRay, double height) {
-		super(emmission,radius, axisRay);
+	public Cylinder(Material material,Color emmission,double radius, Ray axisRay, double height) {
+		super(material,emmission,radius, axisRay);
 		this.height = height;
-	}
-
-/**
- * copy constructor
- * @param cylinder
- */
-	public Cylinder(Cylinder cylinder) {
-		super(cylinder.emmission,cylinder.radius, cylinder.axisRay);
-		this.height = cylinder.height;
 	}
 
 	/**

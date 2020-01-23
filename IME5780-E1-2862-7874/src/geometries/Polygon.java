@@ -17,15 +17,15 @@ public abstract class Polygon extends Geometry {
 	 * @param color
 	 * @param points
 	 */
-	public Polygon(Color emmission,Point3D... points) {
-		super(emmission);
+	public Polygon(Material material,Color emmission,Point3D... points) {
+		super(material,emmission);
 		if (points.length < 3)
 			throw new IllegalArgumentException("Polygon must have at least 3 points");
 		this.points = new ArrayList<>();
 		Point3D p1 = points[0];
 		Point3D p2 = points[1];
 		Point3D p3 = points[2];
-		this.plane = new Plane(emmission,p1, p2, p3);
+		this.plane = new Plane(material,emmission,p1, p2, p3);
 		this.points.add(p1);
 		this.points.add(p2);
 		this.points.add(p3);

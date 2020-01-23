@@ -13,6 +13,7 @@ import org.junit.Test;
 
 import geometries.Polygon;
 import primitives.Color;
+import primitives.Material;
 import primitives.Point3D;
 import primitives.Ray;
 import primitives.Vector;
@@ -30,7 +31,8 @@ public class PolygonTest {
 	 */
 	@Test
 	public void testFindIntersections() {
-		Polygon polygon = new Polygon(new Color(0,0,0),new Point3D(1, -1, -1), new Point3D(1, 1, -1), new Point3D(1, 1, 1),
+		Material material = new Material(0, 0, 0);
+		Polygon polygon = new Polygon(material,new Color(0,0,0),new Point3D(1, -1, -1), new Point3D(1, 1, -1), new Point3D(1, 1, 1),
 				new Point3D(1, -1, 1)) {
 			@Override
 			public Vector getNormal(Point3D point) {
