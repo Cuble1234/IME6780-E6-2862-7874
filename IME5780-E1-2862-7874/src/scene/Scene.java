@@ -1,7 +1,10 @@
 package scene;
 
+import java.util.List;
+
 import elements.AmbientLight;
 import elements.Camera;
+import elements.LightSource;
 import geometries.Geometries;
 import geometries.Intersectable;
 import primitives.Color;
@@ -13,6 +16,7 @@ public class Scene {
 	private Geometries geometries;
 	private Camera camera;
 	private double distance;
+	private List<LightSource> lights;
 	public Scene(String name) {
 		this.name = name;
 		this.geometries = new Geometries();
@@ -78,6 +82,11 @@ public class Scene {
 	 */
 	public void addGeometries(Intersectable... geometries) {
 		this.geometries.add(geometries);
+	}
+	public void addLightSorce(LightSource... lights) {
+		for(int i = 0;i<lights.length;++i) {
+			this.lights.add(lights[i]);
+		}
 	}
 	
 }

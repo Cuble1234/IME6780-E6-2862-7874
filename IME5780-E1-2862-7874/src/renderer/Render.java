@@ -50,7 +50,7 @@ public class Render {
 	}
 /** the closest point to the camera
  * @param intersectionPoints
- * @returnthe closest point to the camera
+ * @return the closest point to the camera
  */
 	private GeoPoint getClosestPoint(List<GeoPoint> intersectionPoints) {
 		GeoPoint closestPoint = intersectionPoints.get(0);
