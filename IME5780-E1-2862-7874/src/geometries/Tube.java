@@ -15,12 +15,14 @@ public class Tube extends RadialGeometry {
 	 * @param radius
 	 * @param axisRay
 	 */
-	public Tube(Material material,Color emmission,double radius, Ray axisRay) {
-		super(material,emmission,radius);
+	public Tube(Material material, Color emmission, double radius, Ray axisRay) {
+		super(material, emmission, radius);
 		this.axisRay = new Ray(axisRay);
 	}
 
-	/************************************Getters*******************************************/
+	/************************************
+	 * Getters
+	 *******************************************/
 	/**
 	 * @return the axisRay
 	 */
@@ -39,16 +41,15 @@ public class Tube extends RadialGeometry {
 		Point3D p0 = this.axisRay.getP0();
 		Vector u = point.subtract(p0);
 		double t = v.dotProduct(u);
-		Point3D o;
-		if (isZero(t))
-			o = p0;
-		else
-			o = p0.add(v.scale(t));
+		Point3D o = p0;
+		if (!isZero(t))
+			o = o.add(v.scale(t));
 		return point.subtract(o).normal();
 	}
-/**
- * ма ооеощ
- */
+
+	/**
+	 * ма ооеощ
+	 */
 	@Override
 	public List<GeoPoint> findIntersections(Ray ray) {
 		return null;

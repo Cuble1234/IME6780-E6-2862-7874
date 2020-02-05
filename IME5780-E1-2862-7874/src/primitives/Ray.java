@@ -47,7 +47,7 @@ public class Ray {
 	// ***************** Administration ******************** //
 	@Override
 	public String toString() {
-		return (this.p0.toString() + " direct to:" + this.direction.toString());
+		return "" + this.p0 + this.direction;
 	}
 
 	@Override

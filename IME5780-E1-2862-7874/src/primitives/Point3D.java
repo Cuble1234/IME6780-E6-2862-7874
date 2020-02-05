@@ -8,21 +8,9 @@ public class Point3D {
 	private Coordinate y;
 	private Coordinate z;
 
-	public static Point3D ZERO = new Point3D(Coordinate.ZERO, Coordinate.ZERO, Coordinate.ZERO);
+	public static Point3D ZERO = new Point3D(0, 0, 0);
 
 	// ***************** Constructors ********************** //
-	/**
-	 * Constructor with
-	 * 
-	 * @param x
-	 * @param y
-	 * @param z
-	 */
-	public Point3D(Coordinate x, Coordinate y, Coordinate z) {
-		this.x = x;
-		this.y = y;
-		this.z = z;
-	}
 
 	/**
 	 * Constructor with double
@@ -33,12 +21,9 @@ public class Point3D {
 	 */
 
 	public Point3D(double x, double y, double z) {
-		Coordinate c1 = new Coordinate(x);
-		Coordinate c2 = new Coordinate(y);
-		Coordinate c3 = new Coordinate(z);
-		this.x = c1;
-		this.y = c2;
-		this.z = c3;
+		this.x = new Coordinate(x);
+		this.y = new Coordinate(y);
+		this.z = new Coordinate(z);
 	}
 
 	/**
@@ -78,7 +63,7 @@ public class Point3D {
 	// ***************** Administration ******************** //
 	@Override
 	public String toString() {
-		return ("x:" + x + " y:" + y + " z:" + z);
+		return "(" + x + "," + y + "," + z + ")";
 	}
 
 	@Override
@@ -91,15 +76,15 @@ public class Point3D {
 			return false;
 
 		Point3D other = (Point3D) obj;
-		return x.equals(other.x)&&y.equals(other.y)&&z.equals(other.z);
+		return x.equals(other.x) && y.equals(other.y) && z.equals(other.z);
 	}
 	// ***************** Operations ******************** //
 
 	/**
-	 * Subtract function
-	 * calculate the subtract between the vector and other vector
-	 * @param other	
-	 *  @return Vector
+	 * Subtract function calculate the subtract between the vector and other vector
+	 * 
+	 * @param other
+	 * @return Vector
 	 */
 	public Vector subtract(Point3D other) {
 		double x1 = this.x.get();
@@ -112,8 +97,8 @@ public class Point3D {
 	}
 
 	/**
-	 * Adding function
-	 * adding point to other  point
+	 * Adding function adding point to other point
+	 * 
 	 * @param a
 	 * @return Point3D
 	 */
@@ -142,7 +127,7 @@ public class Point3D {
 		double y2 = other.y.get();
 		double z2 = other.z.get();
 //((x2-x1)^2+(y2-y1)^2+(z2-z1)^2)
-		return (x2-x1)*(x2-x1)+(y2-y1)*(y2-y1)+(z2-z1)*(z2-z1);
+		return (x2 - x1) * (x2 - x1) + (y2 - y1) * (y2 - y1) + (z2 - z1) * (z2 - z1);
 	}
 
 	/**
@@ -152,8 +137,8 @@ public class Point3D {
 	 * @return double
 	 */
 
-	public double dictance(Point3D a) {
-		//root of ((x2-x1)^2+(y2-y1)^2+(z2-z1)^2)
+	public double distance(Point3D a) {
+		// root of ((x2-x1)^2+(y2-y1)^2+(z2-z1)^2)
 		return Math.sqrt(this.distance2(a));
 	}
 

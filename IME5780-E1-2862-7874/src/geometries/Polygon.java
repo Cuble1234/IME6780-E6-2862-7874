@@ -7,25 +7,46 @@ import primitives.*;
 import static primitives.Util.*;
 
 //@param
-public abstract class Polygon extends Geometry {
+public class Polygon extends Geometry {
 	protected List<Point3D> points;
 	protected Plane plane;
 
 	// ***************** Constructors ********************** //
+
 	/**
 	 * Regular constructor
+	 * 
+	 * @param points
+	 */
+	public Polygon(Point3D... points) {
+		this(new Material(0,0,0), Color.BLACK, points);
+	}
+
+	/**
+	 * Regular constructor
+	 * 
 	 * @param color
 	 * @param points
 	 */
-	public Polygon(Material material,Color emmission,Point3D... points) {
-		super(material,emmission);
+	public Polygon(Color emmission, Point3D... points) {
+		this(new Material(0,0,0), emmission, points);
+	}
+
+	/**
+	 * Regular constructor
+	 * 
+	 * @param color
+	 * @param points
+	 */
+	public Polygon(Material material, Color emmission, Point3D... points) {
+		super(material, emmission);
 		if (points.length < 3)
 			throw new IllegalArgumentException("Polygon must have at least 3 points");
 		this.points = new ArrayList<>();
 		Point3D p1 = points[0];
 		Point3D p2 = points[1];
 		Point3D p3 = points[2];
-		this.plane = new Plane(material,emmission,p1, p2, p3);
+		this.plane = new Plane(material, emmission, p1, p2, p3);
 		this.points.add(p1);
 		this.points.add(p2);
 		this.points.add(p3);
@@ -54,40 +75,53 @@ public abstract class Polygon extends Geometry {
 	public Plane getPlane() {
 		return plane;
 	}
+
 	/**
 	 * get ray and return list of the intersections between the ray and the polygon
-	**/
+	 **/
 	public List<GeoPoint> findIntersections(Ray ray) {
 		List<GeoPoint> intersectionsList = this.plane.findIntersections(ray);
 		if (intersectionsList == null)
 			return null;
-		Point3D p0 = new Point3D(ray.getP0());
-		List<Vector> vectors = new ArrayList();
-		List<Vector> normals = new ArrayList();
-		int index = 0, temp;
+		Point3D p0 = ray.getP0();
+		Vector v = ray.getDirection();
+		boolean positive = true, first = false;
+		Vector vec1 = null, vec2, vec0 = null;
 		for (Point3D point : points) {
-			vectors.add(index, this.points.get(index).subtract(p0));
-			++index;
-		}
-		int temp2 = 1;
-		index = 0;
-		for (Vector vector : vectors) {
-			temp = index;
-			++index;
-			if (index == vectors.size()) {
-				temp2 = index;
-				index = 0;
+			vec2 = point.subtract(p0);
+			if (vec1 != null) {
+				double vn = Util.alignZero(v.dotProduct(vec1.crossProduct(vec2)));
+				if (vn == 0)
+					return null;
+				boolean test = vn > 0;
+				if (first)
+					positive = test;
+				else if (positive != test)
+					return null;
 			}
-			normals.add(temp, vectors.get(temp).crossProduct(vectors.get(index)).normal());
+			else
+				vec0 = vec2;
+			vec1 = vec2;
 		}
-		double[] tests = new double[temp2];
-
-		for (index = 0; index >= tests.length; ++index) {
-			if (Util.isZero(tests[index]))
-				return null;
-			++index;
-		}
+		double vn = Util.alignZero(v.dotProduct(vec1.crossProduct(vec0)));
+		if (vn == 0 || positive != (vn > 0))
+			return null;
 		intersectionsList.get(0).geometry = this;
 		return intersectionsList;
 	}
+
+	/**
+	 * get normal function
+	 * 
+	 * @param Point3D
+	 * @return normal
+	 */
+	@Override
+	public Vector getNormal(Point3D point) {
+		// Plane's normal does not depend on the point - we can save passing the
+		// parameter
+		// thus calling plane's regular getter of normal
+		return this.plane.getNormal();
+	}
+
 }

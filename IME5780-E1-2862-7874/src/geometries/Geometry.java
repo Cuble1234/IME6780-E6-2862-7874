@@ -2,19 +2,30 @@ package geometries;
 
 import primitives.*;
 
+/**
+ * 
+ * @author yahav
+ *
+ */
 public abstract class Geometry implements Intersectable {
-	protected Color emmission;
+	protected Color emission;
 	protected Material material;
 	public abstract Vector getNormal(Point3D point);
+	
+	public Geometry() {
+		this.material = new Material(0,0,0);
+		this.emission = Color.BLACK;
+	}
+	
 	public Geometry(Material material,Color emmission) {
 		this.material = material;
-		this.emmission = emmission;
+		this.emission = emmission;
 	}
 	/**
 	 * @return the emmission
 	 */
 	public Color getEmmission() {
-		return emmission;
+		return emission;
 	}
 	/**
 	 * @return the material

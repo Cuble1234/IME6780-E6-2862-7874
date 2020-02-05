@@ -7,15 +7,12 @@ import primitives.*;
 public class Cylinder extends Tube {
 	private double height;
 
-/**
- * @param
- * **/
 	/**
 	 *Regular constructor
- * @param radius
- * @param axisRay
- * @param height
- */
+	 * @param radius
+	 * @param axisRay
+	 * @param height
+	 */
 	public Cylinder(Material material,Color emmission,double radius, Ray axisRay, double height) {
 		super(material,emmission,radius, axisRay);
 		this.height = height;
@@ -28,11 +25,11 @@ public class Cylinder extends Tube {
 		return height;
 	}
 
-/**
- * get normal function
- * @param Point3D
- *  @return normal to cylinder
- */
+	/**
+	 * get normal function
+	 * @param Point3D
+	 *  @return normal to cylinder
+	 */
 	 @Override
 	    public Vector getNormal(Point3D p) {
 	        Point3D p0 = axisRay.getP0();

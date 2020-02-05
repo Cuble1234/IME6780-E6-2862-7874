@@ -1,7 +1,7 @@
 package geometries;
 
-import java.util.ArrayList;
 import java.util.List;
+import static primitives.Util.*;
 
 import primitives.*;
 
@@ -17,17 +17,18 @@ public class Sphere extends RadialGeometry {
 	// ***************** Constructors ********************** //
 	/**
 	 * Regular constructor
+	 * 
 	 * @param color
 	 * @param radius
 	 * @param center
 	 */
-	public Sphere(Material material,Color emmission, double radius, Point3D center) {
-		super(material,emmission,radius);
+	public Sphere(Material material, Color emmission, double radius, Point3D center) {
+		super(material, emmission, radius);
 		this.center = center;
 	}
 
 	/**
-	 *@return center
+	 * @return center
 	 */
 	public Point3D getCenter() {
 		return center;
@@ -46,38 +47,32 @@ public class Sphere extends RadialGeometry {
 	@Override
 
 	public List<GeoPoint> findIntersections(Ray ray) {
-		Point3D p0 = new Point3D(ray.getP0());
-		List<GeoPoint> list = new ArrayList<GeoPoint>();
+		Point3D p0 = ray.getP0();
+		Vector v = ray.getDirection();
 
-		if (p0.equals(this.getCenter())) {
-			list.add(new GeoPoint(this,Point3D.ZERO.add(ray.getDirection().scale(this.radius))));
-			return list;
+		Vector u = null;
+		try {
+			u = this.center.subtract(p0);
+		} catch (Exception e) {
+			return List.of(new GeoPoint(this, this.center.add(v.scale(this.radius))));
 		}
-		Vector u = new Vector(this.center.subtract(p0));
-		Vector v = new Vector(ray.getDirection());
+
 		double tm = v.dotProduct(u);
-		Vector subtrction = new Vector(p0.subtract(center));
-		/**
-		 * if (subtrction.length2() - (this.getRadius() * this.getRadius()) == 0) {
-		 * return null; }
-		 **/
-		double d = Math.sqrt(u.length2() - tm * tm);
-		double th = Math.sqrt((this.getRadius() * this.getRadius()) - d * d);
-		double t1 = tm + th;
-		double t2 = tm - th;
-		if (t1 > 0 || t2 > 0) {
-			if (t1==t2) {
-				list.add(new GeoPoint(this,p0.add(ray.getDirection().scale(t1))));
-				return list;
-			}
-			if (t1 > 0) {
-				list.add(new GeoPoint(this,p0.add(ray.getDirection().scale(t1))));
-			}
-			if (t2 > 0) {
-					list.add(new GeoPoint(this,p0.add(ray.getDirection().scale(t2))));
-			}
-			return list;
-		} else
-			return null;
+		double d2 = u.length2() - tm * tm;
+		double th2 = this.radius * this.radius - d2;
+		if (th2 < 0) return null;
+		double th = alignZero(Math.sqrt(th2));
+		if (th == 0) return null;
+		
+		double t1 = alignZero(tm + th);
+		double t2 = alignZero(tm - th);
+		if (t1 <= 0 && t2 <= 0) return null;
+
+		if (t1 > 0 && t2 > 0)
+			return List.of(new GeoPoint(this, p0.add(v.scale(t1))), new GeoPoint(this, p0.add(v.scale(t2))));
+		if (t1 > 0)
+			return List.of(new GeoPoint(this, p0.add(v.scale(t1))));
+		else // t2 > 0
+			return List.of(new GeoPoint(this, p0.add(v.scale(t2))));
 	}
 }

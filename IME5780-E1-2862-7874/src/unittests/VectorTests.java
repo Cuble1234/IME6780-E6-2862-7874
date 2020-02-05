@@ -18,6 +18,7 @@ public class VectorTests {
 	 */
 	@Test
 	public void testAdd() {
+		System.out.println(vec1);
 		try {
 			vec1.add(vec2);
 			fail("Didn't throw vector 0 exception");
