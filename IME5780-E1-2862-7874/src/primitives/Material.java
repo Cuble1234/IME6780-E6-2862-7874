@@ -1,9 +1,8 @@
 package primitives;
 
 /**
- * 
- * @author Yahav & Elchanan
- *
+ *  @author Yahav & Elchanan
+ *Describes the Characteristics of the object
  */
 public class Material {
 	private double kD;
@@ -46,5 +45,5 @@ public class Material {
 	public int getnShininess() {
 		return nShininess;
 	}
-	
+
 }

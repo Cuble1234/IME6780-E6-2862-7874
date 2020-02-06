@@ -6,15 +6,13 @@ import primitives.Point3D;
 import primitives.Ray;
 
 public interface Intersectable {
-	
-	public static class GeoPoint{
+	static class GeoPoint{
 		public Geometry geometry;
 		public Point3D point;
 		public GeoPoint(Geometry geometry, Point3D point) {
 			this.geometry = geometry;
 			this.point = point;
 		}
-		@Override
 		public boolean equals(Object obj) {
 			if (this == obj)
 				return true;
@@ -24,10 +22,8 @@ public interface Intersectable {
 				return false;
 
 			GeoPoint other = (GeoPoint) obj;
-			return this.point.equals(other.point);
+			return point.equals(other.point)&&geometry.equals(other.geometry);
 		}
-		
 	}
-	
 	public List<GeoPoint> findIntersections(Ray ray); 
 }

@@ -1,36 +1,50 @@
 package primitives;
 
 /**
- * 
- * @author elhanan and yahav represent a 3 d point at the space
+ * Point3D class
  */
 public class Point3D {
 	private Coordinate x;
 	private Coordinate y;
 	private Coordinate z;
 
-	public static Point3D ZERO = new Point3D(0, 0, 0);
+	public static Point3D ZERO = new Point3D(Coordinate.ZERO, Coordinate.ZERO, Coordinate.ZERO);
 
 	// ***************** Constructors ********************** //
-
 	/**
-	 * Point3D parameters constructor.<br>
+	 * Constructor with
 	 * 
-	 * @param x represent coordinate x at the point
-	 * @param y represent coordinate y at the point
-	 * @param z represent coordinate z at the point
+	 * @param x
+	 * @param y
+	 * @param z
 	 */
-
-	public Point3D(double x, double y, double z) {
-		this.x = new Coordinate(x);
-		this.y = new Coordinate(y);
-		this.z = new Coordinate(z);
+	public Point3D(Coordinate x, Coordinate y, Coordinate z) {
+		this.x = x;
+		this.y = y;
+		this.z = z;
 	}
 
 	/**
-	 * Point3D copy constructor constructor copy the point to new other point
+	 * Constructor with double
 	 * 
-	 * @param the real point
+	 * @param x
+	 * @param y
+	 * @param z
+	 */
+
+	public Point3D(double x, double y, double z) {
+		Coordinate c1 = new Coordinate(x);
+		Coordinate c2 = new Coordinate(y);
+		Coordinate c3 = new Coordinate(z);
+		this.x = c1;
+		this.y = c2;
+		this.z = c3;
+	}
+
+	/**
+	 * Copy constructor
+	 * 
+	 * @param point
 	 */
 	public Point3D(Point3D point) {
 		this.x = point.x;
@@ -40,8 +54,6 @@ public class Point3D {
 
 	// ***************** Getters/Setters ********************** //
 	/**
-	 * getter for x coordinate
-	 * 
 	 * @return the x
 	 */
 
@@ -50,8 +62,6 @@ public class Point3D {
 	}
 
 	/**
-	 * getter for y coordinate
-	 * 
 	 * @return the y
 	 */
 	public Coordinate getY() {
@@ -59,8 +69,6 @@ public class Point3D {
 	}
 
 	/**
-	 * getter for z coordinate
-	 * 
 	 * @return the z
 	 */
 	public Coordinate getZ() {
@@ -68,21 +76,11 @@ public class Point3D {
 	}
 
 	// ***************** Administration ******************** //
-	/**
-	 * to string function
-	 * 
-	 * @return the coordinates of the point
-	 */
 	@Override
 	public String toString() {
-		return "(" + x + "," + y + "," + z + ")";
+		return ("x:" + x + " y:" + y + " z:" + z);
 	}
 
-	/**
-	 * equals function compare between 2 point and
-	 * 
-	 * @return true or false
-	 */
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -93,15 +91,15 @@ public class Point3D {
 			return false;
 
 		Point3D other = (Point3D) obj;
-		return x.equals(other.x) && y.equals(other.y) && z.equals(other.z);
+		return x.equals(other.x)&&y.equals(other.y)&&z.equals(other.z);
 	}
 	// ***************** Operations ******************** //
 
 	/**
-	 * Subtract function calculate the subtract between the vector and other vector
-	 * 
-	 * @param other
-	 * @return Vector between both of the point
+	 * Subtract function
+	 * calculate the subtract between the vector and other vector
+	 * @param other	
+	 *  @return Vector
 	 */
 	public Vector subtract(Point3D other) {
 		double x1 = this.x.get();
@@ -114,8 +112,8 @@ public class Point3D {
 	}
 
 	/**
-	 * Adding function adding point to other point
-	 * 
+	 * Adding function
+	 * adding point to other  point
 	 * @param a
 	 * @return Point3D
 	 */
@@ -144,19 +142,19 @@ public class Point3D {
 		double y2 = other.y.get();
 		double z2 = other.z.get();
 //((x2-x1)^2+(y2-y1)^2+(z2-z1)^2)
-		return (x2 - x1) * (x2 - x1) + (y2 - y1) * (y2 - y1) + (z2 - z1) * (z2 - z1);
+		return (x2-x1)*(x2-x1)+(y2-y1)*(y2-y1)+(z2-z1)*(z2-z1);
 	}
 
 	/**
 	 * Calculate the distance between 2 points
 	 * 
-	 * @param other point
-	 * @return double a distance between both of the points
+	 * @param a
+	 * @return double
 	 */
 
-	public double distance(Point3D other) {
-		// root of ((x2-x1)^2+(y2-y1)^2+(z2-z1)^2)
-		return Math.sqrt(this.distance2(other));
+	public double dictance(Point3D a) {
+		//root of ((x2-x1)^2+(y2-y1)^2+(z2-z1)^2)
+		return Math.sqrt(this.distance2(a));
 	}
 
 }

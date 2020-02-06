@@ -3,11 +3,12 @@ package renderer;
 import java.util.List;
 
 import elements.LightSource;
-import geometries.*;
-import primitives.*;
+import primitives.Color;
+import primitives.Point3D;
+import primitives.Ray;
+import primitives.Vector;
 import scene.Scene;
 import static geometries.Intersectable.GeoPoint;
-import static primitives.Util.*;
 
 public class Render {
 	Scene scene;
@@ -28,17 +29,14 @@ public class Render {
 	 * create the image
 	 */
 	public void renderImage() {
-		int nx = imageWriter.getNx();
-		int ny = imageWriter.getNy();
-		double d = scene.getDistance(), w = imageWriter.getWidth(), h = imageWriter.getHeight();
-		Geometries geos = scene.getGeometries();
-		java.awt.Color background = scene.getBackground().getColor();
+
 		for (int i = 0; i < imageWriter.getNy(); ++i)
 			for (int j = 0; j < imageWriter.getNx(); ++j) {
-				Ray ray = scene.getCamera().constructRayThroughPixel(nx, ny, j, i, d, w, h);
-				List<GeoPoint> intersectionPoints = geos.findIntersections(ray);
+				Ray ray = scene.getCamera().constructRayThroughPixel(imageWriter.getNx(), imageWriter.getNy(), j, i,
+						scene.getDistance(), imageWriter.getWidth(), imageWriter.getHeight());
+				List<GeoPoint> intersectionPoints = scene.getGeometries().findIntersections(ray);
 				if (intersectionPoints == null)
-					imageWriter.writePixel(j, i, background);
+					imageWriter.writePixel(j, i, scene.getBackground().getColor());
 				else {
 					GeoPoint closestPoint = getClosestPoint(intersectionPoints);
 					imageWriter.writePixel(j, i, calcColor(closestPoint).getColor());
@@ -62,7 +60,7 @@ public class Render {
 		double ks = intersection.geometry.getMaterial().getkS();
 		for (LightSource lightSource : scene.getLights()) {
 			Vector l = lightSource.getL(intersection.point);
-			if ((n.dotProduct(l) > 0 && n.dotProduct(v) > 0) || (n.dotProduct(l) < 0 && n.dotProduct(v) < 0)) {
+			if ((n.dotProduct(l)>0 && n.dotProduct(v)>0)||(n.dotProduct(l)<0 && n.dotProduct(v)<0)) {
 				Color lightIntensity = lightSource.getIntensity(intersection.point);
 				color = color.add(calcDiffusive(kd, l, n, lightIntensity),
 						calcSpecular(ks, l, n, v, nShininess, lightIntensity));
@@ -78,29 +76,25 @@ public class Render {
 	 * @return the closest point to the camera
 	 */
 	private GeoPoint getClosestPoint(List<GeoPoint> intersectionPoints) {
-		GeoPoint closestPoint = null;
-		Point3D p0 = this.scene.getCamera().getP0();
-		double distance = Double.POSITIVE_INFINITY;
+		GeoPoint closestPoint = intersectionPoints.get(0);
 		for (GeoPoint point : intersectionPoints) {
-			double d = p0.distance(point.point);
-			if (d < distance) {
+			if (point.point.dictance(this.scene.getCamera().getP0()) < closestPoint.point
+					.dictance(this.scene.getCamera().getP0())) {
 				closestPoint = point;
-				distance = d;
 			}
 		}
 		return closestPoint;
 	}
-
-	private Color calcDiffusive(double kd, Vector l, Vector n, Color lightIntensity) {
-		return lightIntensity.scale(kd * (Math.abs(l.dotProduct(n))));
+	private Color calcDiffusive(double kd,Vector l,Vector n, Color lightIntensity) {
+		return lightIntensity.scale(kd*(Math.abs(l.dotProduct(n))));
 	}
-
-	private Color calcSpecular(double ks, Vector l, Vector n, Vector v, int nShininess, Color lightIntensity) {
-		Vector r = l.subtract(n.scale(2 * l.dotProduct(n)));
-		double minusVR = -alignZero(v.dotProduct(r));
-		if (minusVR <= 0)
-			return Color.BLACK;
-		return lightIntensity.scale(ks * Math.pow(minusVR, nShininess));
+	private Color calcSpecular(double ks,Vector l,Vector n,Vector v,int nShininess,Color lightIntensity) {
+		Vector r = l.subtract(n.scale(2*l.dotProduct(n)));
+		double max = -v.dotProduct(r);
+		if(max<0) {
+			max = 0;
+		}
+		return lightIntensity.scale(ks*Math.pow(max,nShininess));	
 	}
 
 	/**
@@ -123,33 +117,19 @@ public class Render {
 	 * @param interval
 	 */
 	public void printGrid(int interval) {
-		java.awt.Color grid = java.awt.Color.WHITE;
-		for (int i = 0; i < imageWriter.getHeight(); ++i)
+		java.awt.Color grid = new java.awt.Color(255, 255, 255);
+		for (int i = 0; i < imageWriter.getHeight(); i += interval)
 			for (int j = 0; j < imageWriter.getWidth(); ++j) {
-				if ((i == 0 && j == 0) || (i == 0 && j % interval != 0)
-						|| (i == imageWriter.getHeight() && j == this.imageWriter.getNx())
-						|| (i == this.imageWriter.getNy() && j % interval != 0) || (j == 0 && i % interval != 0)
-						|| (j == imageWriter.getWidth() && i % interval != 0)||(i%interval!=0&&j%interval!=0)) {}
-				else
-					imageWriter.writePixel(j, i, grid);
-			}
-		/*for (int i = 0; i < imageWriter.getHeight(); i += interval)
-			for (int j = 0; j < imageWriter.getWidth(); ++j) {
-				if ((i == 0 && j == 0) || (i == 0 && j % interval != 0)
-						|| (i == imageWriter.getHeight() && j == this.imageWriter.getNx())
-						|| (i == this.imageWriter.getNy() && j % interval != 0) || (j == 0 && i % interval != 0)
+				if ((i == 0 && j == 0) || (i == 0 && j % interval != 0) || (i == imageWriter.getHeight() && j == 500)
+						|| (i == 500 && j % 50 != 0) || (j == 0 && i % interval != 0)
 						|| (j == imageWriter.getWidth() && i % interval != 0)) {
 
 				} else {
-					if (i < imageWriter.getWidth()) {
-						imageWriter.writePixel(i, j, grid);
-					}
-					if (j < imageWriter.getHeight()) {
-						imageWriter.writePixel(j, i, grid);
-					}
+					imageWriter.writePixel(i, j, grid);
+					imageWriter.writePixel(j, i, grid);
 				}
+
 			}
-			*/
 
 	}
 }

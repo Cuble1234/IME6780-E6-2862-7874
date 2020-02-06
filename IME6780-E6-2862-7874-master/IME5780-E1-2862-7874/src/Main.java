@@ -1,4 +1,3 @@
-
 /**
  * 
  */
@@ -7,8 +6,6 @@
  * @author elhan
  *
  */
-import primitives.*;
-
 public class Main {
 
 	/**

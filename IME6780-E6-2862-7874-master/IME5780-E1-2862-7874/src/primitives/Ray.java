@@ -1,9 +1,7 @@
 package primitives;
 
 /**
- * 
- * @author elhanan and yahav represent ar at the space had a start point and
- *         direction vector
+ * Ray Class
  */
 public class Ray {
 	private Point3D p0;
@@ -11,10 +9,10 @@ public class Ray {
 
 	// ***************** Constructors ********************** //
 	/**
-	 * ray Constructor
+	 * Constructor with
 	 * 
-	 * @param Point3D p0 - start point
-	 * @param Vector  direction
+	 * @param p0
+	 * @param direction
 	 */
 	public Ray(Point3D p0, Vector direction) {
 		this.p0 = p0;
@@ -22,7 +20,7 @@ public class Ray {
 	}
 
 	/**
-	 * Ray Copy Constructor get ray and and put it in another new ray
+	 * Copy Constructor
 	 * 
 	 * @param ray
 	 */
@@ -33,39 +31,25 @@ public class Ray {
 
 	// ***************** Getters/Setters ********************** //
 	/**
-	 * getter for direction
-	 * 
-	 * @return Vector of the direction of the ray
+	 * @return the direction
 	 */
 	public Vector getDirection() {
 		return direction;
 	}
 
 	/**
-	 * getter for p0
-	 * 
-	 * @return Point3D p0 - the start point of the ray
+	 * @return the p0
 	 */
 	public Point3D getP0() {
 		return p0;
 	}
 
 	// ***************** Administration ******************** //
-	/**
-	 * to string function
-	 * 
-	 * @return the start point of the ray and her direction
-	 */
 	@Override
 	public String toString() {
-		return this.p0 + "" + this.direction;
+		return (this.p0.toString() + " direct to:" + this.direction.toString());
 	}
 
-	/**
-	 * equals function compare between 2 rays
-	 * 
-	 * @return true or false
-	 */
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)

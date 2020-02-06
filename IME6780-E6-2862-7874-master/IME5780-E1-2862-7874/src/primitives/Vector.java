@@ -1,11 +1,5 @@
 package primitives;
 
-/**
- * represent a vector at the space
- * 
- * @author elhan
- *
- */
 public class Vector {
 	private Point3D head;
 
@@ -16,9 +10,9 @@ public class Vector {
 	 * @param head of the vector
 	 */
 	public Vector(Point3D head) {
-		if (head.equals(Point3D.ZERO))
+		if (head.equals(Point3D.ZERO)) {
 			throw new IllegalArgumentException("Vector zero is illegal");
-
+		}
 		this.head = head;
 	}
 
@@ -30,13 +24,14 @@ public class Vector {
 	 * @param z coordinate value
 	 */
 	public Vector(double x, double y, double z) {
-		this.head = new Point3D(x, y, z);
-		if (head.equals(Point3D.ZERO))
+		this.head = new Point3D(new Coordinate(x), new Coordinate(y), new Coordinate(z));
+		if (head.equals(Point3D.ZERO)) {
 			throw new IllegalArgumentException("Vector zero is illegal");
+		}
 	}
 
 	/**
-	 * Vector Copy constructor get a vector and put it at another new vector
+	 * Copy constructor
 	 * 
 	 * @param vector
 	 */
@@ -55,21 +50,12 @@ public class Vector {
 	}
 
 	// ***************** Administration ******************** //
-	/**
-	 * to string function
-	 * 
-	 * @return direction of the vector
-	 */
 	@Override
 	public String toString() {
-		return "-> " + head;
+		return head.toString();
+
 	}
 
-	/**
-	 * equals function compare between 2 vectors
-	 * 
-	 * @return true or false
-	 */
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -123,8 +109,7 @@ public class Vector {
 	/**
 	 * Scalar multiplication
 	 * 
-	 * scale the vector with other number
-	 * 
+	 *scale the vector with other number
 	 * @param num
 	 * @return Vector
 	 */
@@ -169,7 +154,7 @@ public class Vector {
 		double x2 = other.head.getX().get();
 		double y2 = other.head.getY().get();
 		double z2 = other.head.getZ().get();
-		// s1=y1 * z2 - y2 * z1 s2=z1 * x2 - z2 * x1 s3=x1 * y2 - x2 * y1
+//s1=y1 * z2 - y2 * z1 s2=z1 * x2 - z2 * x1 s3=x1 * y2 - x2 * y1
 		return new Vector(y1 * z2 - y2 * z1, z1 * x2 - z2 * x1, x1 * y2 - x2 * y1);
 	}
 
@@ -193,7 +178,7 @@ public class Vector {
 	 * @return double
 	 */
 	public double length() {
-		// root of(X^2+Y^2+Z^2)
+		//root of(X^2+Y^2+Z^2)
 		return Math.sqrt(length2());
 	}
 
@@ -216,11 +201,7 @@ public class Vector {
 	 * @return Vector
 	 */
 	public Vector normalization() {
-		double l = length();
-		double x = this.head.getX().get();
-		double y = this.head.getY().get();
-		double z = this.head.getZ().get();
-		return new Vector(x / l, y / l, z / l);
+		return new Vector(this).normal();
 	}
 
 }
