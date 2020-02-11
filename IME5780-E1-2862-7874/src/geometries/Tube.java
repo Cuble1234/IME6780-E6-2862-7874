@@ -5,6 +5,11 @@ import static primitives.Util.*;
 
 import java.util.List;
 
+/**
+ * 
+ * @author elhanan and yahav represent unlimited tube at the space extands from
+ *         radial geomtry
+ */
 public class Tube extends RadialGeometry {
 	protected Ray axisRay;
 
@@ -12,8 +17,10 @@ public class Tube extends RadialGeometry {
 	/**
 	 * Regular constructor
 	 * 
-	 * @param radius
-	 * @param axisRay
+	 * @param color    of the tube
+	 * @param material of the tube
+	 * @param radius   of the tube
+	 * @param axisRay  - enter ray of the tube use hus father and creat new tube
 	 */
 	public Tube(Material material, Color emmission, double radius, Ray axisRay) {
 		super(material, emmission, radius);
@@ -24,7 +31,9 @@ public class Tube extends RadialGeometry {
 	 * Getters
 	 *******************************************/
 	/**
-	 * @return the axisRay
+	 * ray getter
+	 * 
+	 * @return the axisRay of the tube
 	 */
 	public Ray getAxisRay() {
 		return axisRay;
@@ -34,7 +43,7 @@ public class Tube extends RadialGeometry {
 	 * get normal function
 	 * 
 	 * @param POINT3D
-	 * @return null
+	 * @return normal to the tube
 	 */
 	public Vector getNormal(Point3D point) {
 		Vector v = this.axisRay.getDirection();
@@ -48,7 +57,9 @@ public class Tube extends RadialGeometry {
 	}
 
 	/**
-	 * ма ооеощ
+	 * find intersuction function
+	 * 
+	 * @return null
 	 */
 	@Override
 	public List<GeoPoint> findIntersections(Ray ray) {

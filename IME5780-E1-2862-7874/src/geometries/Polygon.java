@@ -5,10 +5,10 @@ import java.util.List;
 
 import primitives.*;
 import static primitives.Util.*;
+
 /**
  * 
- * @author elhanan and yahav
- *represent a typical poligonn at the space
+ * @author elhanan and yahav represent a typical poligonn at the space
  */
 public class Polygon extends Geometry {
 	protected List<Point3D> points;// a rgenised list of the polygon points
@@ -19,28 +19,20 @@ public class Polygon extends Geometry {
 	/**
 	 * Regular constructor for polygon
 	 * 
-	 * @param points
-	 * create a new polygon and painter the color to black and set the matirel to (0,0,0)
+	 * @param points create a new polygon and painter the color to black and set the
+	 *               matirel to (0,0,0)
 	 */
 	public Polygon(Point3D... points) {
-		this(new Material(0,0,0), Color.BLACK, points);
+		this(new Material(0, 0, 0), Color.BLACK, points);
 	}
 
 	/**
 	 * Regular constructor
 	 * 
-	 * @param color
-	 * @param points
-	 */
-	public Polygon(Color emmission, Point3D... points) {
-		this(new Material(0,0,0), emmission, points);
-	}
-
-	/**
-	 * Regular constructor
-	 * 
-	 * @param color
-	 * @param points
+	 * @param matirel represent the matirel of th polygon
+	 * @param color   of th polygon
+	 * @param points- orgnized list of the polygon points create new polygon with
+	 *                that parmas
 	 */
 	public Polygon(Material material, Color emmission, Point3D... points) {
 		super(material, emmission);
@@ -67,24 +59,31 @@ public class Polygon extends Geometry {
 	 ************************** Getters****************************************
 	 */
 	/**
-	 * @return the points
+	 * getPoints function
+	 * 
+	 * @return the list of th polygon's points
 	 */
 	public List<Point3D> getPoints() {
 		return points;
 	}
 
 	/**
-	 * @return the plane
+	 * get plane function
+	 * 
+	 * @return the plane of th polyagon
 	 */
 	public Plane getPlane() {
 		return plane;
 	}
 
 	/**
-	 * get ray and return list of the intersections between the ray and the polygon
+	 * find inersections
+	 * 
+	 * @param ray
+	 * @return list of the intersections between the ray and the polygon
 	 **/
 	public List<GeoPoint> findIntersections(Ray ray) {
-	/*	List<GeoPoint> intersectionsList = this.plane.findIntersections(ray);
+		List<GeoPoint> intersectionsList = this.plane.findIntersections(ray);
 		if (intersectionsList == null)
 			return null;
 		Point3D p0 = ray.getP0();
@@ -102,8 +101,7 @@ public class Polygon extends Geometry {
 					positive = test;
 				else if (positive != test)
 					return null;
-			}
-			else
+			} else
 				vec0 = vec2;
 			vec1 = vec2;
 		}
@@ -112,42 +110,13 @@ public class Polygon extends Geometry {
 			return null;
 		intersectionsList.get(0).geometry = this;
 		return intersectionsList;
-	}*/
-		  List<GeoPoint> intersections = this.plane.findIntersections(ray);
-	        if (intersections == null) // if there are no intersections with the plane, or the ray's
-	            // base is on the triangle return null
-	            return null;
-	        Point3D p0 = ray.getP0();
-	        int size = this.points.size();
-	        Vector[] v = new Vector[size];
-	        Vector[] n = new Vector[size];
-	        double[] un = new double[size];
-	        // vi = pi - p0
-	        for (int i = 0; i < size; ++i)
-	            v[i] = points.get(i).subtract(p0);
-	        // Ni = Vi x Vi+1
-	        for (int i = 0; i < size; ++i)
-	            n[i] = v[i].crossProduct(v[(i < size - 1) ? i + 1 : 0]).normal();
-	        Vector u = intersections.get(0).point.subtract(p0);
-	        // uni = u*Ni
-	        for (int i = 0; i < size; ++i)
-	            if ((un[i] = alignZero(u.dotProduct(n[i]))) == 0)
-	                return null;
-	        double sign = un[0];
-	        for (int i = 1; i < size; ++i)
-	            // if the N1...Nn do not have the same sign, return null
-	            if ((sign < 0 && un[i] > 0) || (sign > 0 && un[i] < 0))
-	                return null;
-	        Point3D intersection = intersections.get(0).point;
-	        intersections.get(0).geometry = this;
-	        return intersections;
-	    }
+	}
 
 	/**
 	 * get normal function
 	 * 
-	 * @param Point3D
-	 * @return normal
+	 * @param Point3D and we dosen use it
+	 * @return normal to the polygon
 	 */
 	@Override
 	public Vector getNormal(Point3D point) {
