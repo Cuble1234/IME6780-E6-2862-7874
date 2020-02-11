@@ -4,17 +4,22 @@ import java.util.List;
 
 import primitives.*;
 
-//@param
+/**
+ * 
+ * @author elhanan and yahav represent a plane at the space
+ */
 public class Plane extends Geometry {
-	private Point3D p;
-	private Vector normal;
+	private Point3D p;// start point
+	private Vector normal;// normal for the whole plane
 
 	// ***************** Constructors ********************** //
 	/**
-	 * Regular constructor
+	 * plane constructor
 	 * 
-	 * @param p
-	 * @param normal
+	 * @param p       start point
+	 * @param normal  for the plane
+	 * @param matirel of the plane
+	 * @param color   of the plane create a new plane
 	 */
 	public Plane(Material material, Color emmission, Point3D p, Vector normal) {
 		super(material, emmission);
@@ -22,6 +27,13 @@ public class Plane extends Geometry {
 		this.normal = new Vector(normal.normalization());
 	}
 
+	/**
+	 * plane constructor
+	 * 
+	 * @param p1,p2,p3 3 point
+	 * @param matirel  of the plane
+	 * @param color    of the plane create a new plane from the points
+	 */
 	public Plane(Material material, Color emmission, Point3D p1, Point3D p2, Point3D p3) {
 		super(material, emmission);
 		this.p = new Point3D(p1);
@@ -29,14 +41,18 @@ public class Plane extends Geometry {
 	}
 
 	/**
-	 * @return the p
+	 * get p function
+	 * 
+	 * @return the p start point of the plane
 	 */
 	public Point3D getP() {
 		return p;
 	}
 
 	/**
-	 * @return the normal
+	 * get normal function
+	 * 
+	 * @return the normal for the whole plane
 	 */
 	public Vector getNormal() {
 		return normal;
@@ -46,7 +62,7 @@ public class Plane extends Geometry {
 	 * get normal function
 	 * 
 	 * @param Point3D
-	 * @return null
+	 * @return the normal for the whole plane
 	 */
 
 	public Vector getNormal(Point3D point) {
@@ -60,14 +76,20 @@ public class Plane extends Geometry {
 	public List<GeoPoint> findIntersections(Ray ray) {
 		Vector v = ray.getDirection();
 		double vn = Util.alignZero(v.dotProduct(this.normal));
-		if (vn == 0) return null;
-		
+		if (vn == 0)
+			return null;
+
 		Point3D p0 = ray.getP0();
 		Vector u = null;
-		try { u = this.p.subtract(p0); } catch(Exception e) { return null; }
-		
+		try {
+			u = this.p.subtract(p0);
+		} catch (Exception e) {
+			return null;
+		}
+
 		double t = Util.alignZero(u.dotProduct(this.normal) / vn);
-		if (t <= 0) return null;
+		if (t <= 0)
+			return null;
 
 		return List.of(new GeoPoint(this, p0.add(v.scale(t))));
 	}

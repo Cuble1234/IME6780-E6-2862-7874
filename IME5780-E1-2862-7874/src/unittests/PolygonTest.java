@@ -32,7 +32,7 @@ public class PolygonTest {
 	@Test
 	public void testFindIntersections() {
 		Material material = new Material(0, 0, 0);
-		Polygon polygon = new Polygon(material,new Color(0,0,0),new Point3D(1, -1, -1), new Point3D(1, 1, -1), new Point3D(1, 1, 1),
+		Polygon square = new Polygon(material,new Color(0,0,0),new Point3D(1, -1, -1), new Point3D(1, 1, -1), new Point3D(1, 1, 1),
 				new Point3D(1, -1, 1)) {
 			@Override
 			public Vector getNormal(Point3D point) {
@@ -42,8 +42,22 @@ public class PolygonTest {
 		};
 		Ray ray = new Ray(new Point3D(0, 0, 0), new Vector(1, 0, 0));
 		List<GeoPoint> list = new ArrayList<GeoPoint>();
-		list.add(new GeoPoint(polygon,new Point3D(1, 0, 0)));
-		assertEquals("Don't find intersection correct", list, polygon.findIntersections(ray));
+		list.add(new GeoPoint(square,new Point3D(1, 0, 0)));
+		assertEquals("Don't find intersection correct", list, square.findIntersections(ray)); //חותך את המרובע
+		list.clear();
+		ray = new Ray(new Point3D(0, 0, 0), new Vector(1, 1, 1));
+		assertEquals("Don't find intersection correct", null, square.findIntersections(ray)); //מחוץ למרובע 
+		list.clear();
+		Polygon pentagon = new Polygon(material,new Color(0,0,0),new Point3D(-2, 0, 0), new Point3D(-1, 2, 0), new Point3D(1, 2, 0),
+				new Point3D(2,0, 0),new Point3D(0, -2, 0));
+		ray = new Ray(new Point3D(0, 0, -1), new Vector(0, 0, 1));
+		list.add(new GeoPoint(pentagon,new Point3D(0, 0, 0)));
+		assertEquals("Don't find intersection correct", list, pentagon.findIntersections(ray)); //חותך את המחומש
+		list.clear();
+		ray = new Ray(new Point3D(0, 0, 0), new Vector(1, 1, 1));
+		assertEquals("Don't find intersection correct", null, pentagon.findIntersections(ray)); //מחוץ למחומש 
+		list.clear();
+		
 	}
 
 }

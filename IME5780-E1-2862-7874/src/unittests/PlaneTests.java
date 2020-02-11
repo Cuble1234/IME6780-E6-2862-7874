@@ -44,16 +44,26 @@ public class PlaneTests {
 				new Point3D(0, 1, 0));
 		Ray ray = new Ray(new Point3D(0, 1, 1), new Vector(0, 0, -1));
 		List<GeoPoint> list = new ArrayList<GeoPoint>();
-		list.add(new GeoPoint(plane, new Point3D(0, 1, 0)));
-		assertEquals("Didn't find intersection like exepted", list, plane.findIntersections(ray));
+		list.add(new GeoPoint(plane, new Point3D(0, 1, 0))); 
+		assertEquals("Didn't find intersection like exepted", list, plane.findIntersections(ray));// חותך
+		list.clear();
 		ray = new Ray(new Point3D(0, 0, 1), new Vector(0, 1, 1));
-		assertEquals("Didn't find intersection like exepted", null, plane.findIntersections(ray));
+		assertEquals("Didn't find intersection like exepted", null, plane.findIntersections(ray));//לא חותך
 		ray = new Ray(new Point3D(0, 0, 0), new Vector(0, 0, 1));
-		assertEquals("Didn't find intersection like exepted", null, plane.findIntersections(ray));
-		ray = new Ray(new Point3D(0, 0, 0), new Vector(0, 1, 0));
-		assertEquals("Didn't find intersection like exepted", null, plane.findIntersections(ray));
-		ray = new Ray(new Point3D(0, 0, 0), new Vector(0, 0, -1));
-		assertEquals("Didn't find intersection like exepted", null, plane.findIntersections(ray));
+		assertEquals("Didn't find intersection like exepted", null, plane.findIntersections(ray)); //מוכל
+		ray = new Ray(new Point3D(0, 0, 1), new Vector(1, 0, 0));
+		assertEquals("Didn't find intersection like exepted", null, plane.findIntersections(ray)); //מקביל
+		ray = new Ray(new Point3D(0.5, 0.5, 0), new Vector(0, 0, 1));
+		assertEquals("Didn't find intersection like exepted", null, plane.findIntersections(ray)); //מאונך בדיוק למישור 
+		ray = new Ray(new Point3D(0.5, 0.5, -1), new Vector(0, 0, 1));
+		list.add(new GeoPoint(plane, new Point3D(0.5, 0.5, 0)));
+		assertEquals("Didn't find intersection like exepted", list, plane.findIntersections(ray)); //מאונך ממתחת למישור 
+		ray = new Ray(new Point3D(0.5, 0.5, 1), new Vector(0, 0, 1));
+		assertEquals("Didn't find intersection like exepted", null, plane.findIntersections(ray)); //מאונך מעל המישור 
+		ray = new Ray(new Point3D(0.5, 0.5, 0), new Vector(1, 1, 1));
+		assertEquals("Didn't find intersection like exepted", null, plane.findIntersections(ray)); //מתחיל בתוך המישור 
+		ray = new Ray(new Point3D(0, 0, 0), new Vector(1, 1, 1));
+		assertEquals("Didn't find intersection like exepted", null, plane.findIntersections(ray)); //מתחיל מקודקוד 
 
 	}
 

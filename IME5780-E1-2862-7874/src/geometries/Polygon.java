@@ -5,18 +5,22 @@ import java.util.List;
 
 import primitives.*;
 import static primitives.Util.*;
-
-//@param
+/**
+ * 
+ * @author elhanan and yahav
+ *represent a typical poligonn at the space
+ */
 public class Polygon extends Geometry {
-	protected List<Point3D> points;
-	protected Plane plane;
+	protected List<Point3D> points;// a rgenised list of the polygon points
+	protected Plane plane;// plane for th polygon
 
 	// ***************** Constructors ********************** //
 
 	/**
-	 * Regular constructor
+	 * Regular constructor for polygon
 	 * 
 	 * @param points
+	 * create a new polygon and painter the color to black and set the matirel to (0,0,0)
 	 */
 	public Polygon(Point3D... points) {
 		this(new Material(0,0,0), Color.BLACK, points);
@@ -80,7 +84,7 @@ public class Polygon extends Geometry {
 	 * get ray and return list of the intersections between the ray and the polygon
 	 **/
 	public List<GeoPoint> findIntersections(Ray ray) {
-		List<GeoPoint> intersectionsList = this.plane.findIntersections(ray);
+	/*	List<GeoPoint> intersectionsList = this.plane.findIntersections(ray);
 		if (intersectionsList == null)
 			return null;
 		Point3D p0 = ray.getP0();
@@ -108,7 +112,36 @@ public class Polygon extends Geometry {
 			return null;
 		intersectionsList.get(0).geometry = this;
 		return intersectionsList;
-	}
+	}*/
+		  List<GeoPoint> intersections = this.plane.findIntersections(ray);
+	        if (intersections == null) // if there are no intersections with the plane, or the ray's
+	            // base is on the triangle return null
+	            return null;
+	        Point3D p0 = ray.getP0();
+	        int size = this.points.size();
+	        Vector[] v = new Vector[size];
+	        Vector[] n = new Vector[size];
+	        double[] un = new double[size];
+	        // vi = pi - p0
+	        for (int i = 0; i < size; ++i)
+	            v[i] = points.get(i).subtract(p0);
+	        // Ni = Vi x Vi+1
+	        for (int i = 0; i < size; ++i)
+	            n[i] = v[i].crossProduct(v[(i < size - 1) ? i + 1 : 0]).normal();
+	        Vector u = intersections.get(0).point.subtract(p0);
+	        // uni = u*Ni
+	        for (int i = 0; i < size; ++i)
+	            if ((un[i] = alignZero(u.dotProduct(n[i]))) == 0)
+	                return null;
+	        double sign = un[0];
+	        for (int i = 1; i < size; ++i)
+	            // if the N1...Nn do not have the same sign, return null
+	            if ((sign < 0 && un[i] > 0) || (sign > 0 && un[i] < 0))
+	                return null;
+	        Point3D intersection = intersections.get(0).point;
+	        intersections.get(0).geometry = this;
+	        return intersections;
+	    }
 
 	/**
 	 * get normal function
