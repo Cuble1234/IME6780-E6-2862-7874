@@ -19,7 +19,7 @@ public class PointLight  extends Light implements LightSource{
 	public Color getIntensity(Point3D point) {
 		Color color;
 		double distance = this.getL(point).length();
-		color = this.intensity.scale(1/(kC+kL*distance+kQ*distance*distance));
+		color = this.intensity.reduce((kC+kL*distance+kQ*distance*distance));
 		return color;
 	}
 	public Vector getL(Point3D point) {

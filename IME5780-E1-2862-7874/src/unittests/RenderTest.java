@@ -41,6 +41,10 @@ public class RenderTest {
 		scene.addGeometries(new Triangle(material,new Color(0, 155,0 ), new Point3D(-150, 0, 149),
 				 			 				new Point3D(  0,  -150, 149),
 				 			 				new Point3D(-150, -150, 149)));
+		
+		scene.addGeometries(new Triangle(material,new Color(0, 155,0 ), new Point3D(-150, 0, 149),
+	 				new Point3D(  0,  -150, 149),
+	 				new Point3D(-150, -150, 149)));
 
 		ImageWriter imageWriter = new ImageWriter("test0", 500, 500, 500, 500);
 		Render render = new Render(imageWriter, scene);
